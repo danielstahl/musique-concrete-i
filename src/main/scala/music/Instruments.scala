@@ -427,12 +427,17 @@ class LowpassReplaceInstrumentBuilder extends AbstractInstrumentBuilder with Dur
 }
 
 abstract class CommonPlayStereoSoundInstrumentBuilder extends AbstractInstrumentBuilder with OutputBuilder {
+  override type SelfType = CommonPlayStereoSoundInstrumentBuilder
 
-  val ampBus = ControlArgumentBuilder[SelfType](self(), "ampBus")
+  override def self(): SelfType = this
 
   var bufNum: jl.Integer = buildInteger(0)
 
+  var amp: jl.Float = buildFloat(1.0f)
+
   var scale: jl.Float = buildFloat(0f)
+
+  var start: jl.Float = buildFloat(0f)
 
   def bufNum(value: Int): SelfType = {
     bufNum = buildInteger(value)
@@ -444,28 +449,31 @@ abstract class CommonPlayStereoSoundInstrumentBuilder extends AbstractInstrument
     self()
   }
 
+  def amp(value: Float): SelfType = {
+    amp = buildFloat(value)
+    self()
+  }
+
+  def start(value: Float): SelfType = {
+    start = buildFloat(value)
+    self()
+  }
+
   override def build(): Seq[Object] =
     super.build() ++
     buildOut() ++
-    ampBus.buildBus() ++
     Seq(
       "bufnum", bufNum,
-      "scale", scale
+      "scale", scale,
+      "amp", amp,
+      "startPos", start
     )
 }
 
 class PlayStereoSoundInstrumentBuilder extends CommonPlayStereoSoundInstrumentBuilder {
-  override type SelfType = PlayStereoSoundInstrumentBuilder
-
-  override def self(): SelfType = this
-
   override val instrumentName: String = "playStereoSound"
 }
 
 class PlayStereoInverseSoundInstrumentBuilder extends CommonPlayStereoSoundInstrumentBuilder {
-  override type SelfType = PlayStereoInverseSoundInstrumentBuilder
-
-  override def self(): SelfType = this
-
   override val instrumentName: String = "playStereoInverseSound"
 }

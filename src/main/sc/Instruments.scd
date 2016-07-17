@@ -176,19 +176,33 @@ SynthDef(\lowPassReplace, {
 }).add;
 
 SynthDef(\playStereoSound, {
-	arg out = 0, bufnum = 0, scale = 1.0, ampBus = 0;
-	var amp;
-	amp = In.kr(ampBus);
+	arg out = 0, bufnum = 0, scale = 1.0, amp = 1.0, startPos = 0;
+	var startFrame;
+
+	startFrame = BufFrames.kr(bufnum) * startPos;
+
 	Out.ar(out,
-		PlayBuf.ar(2, bufnum, BufRateScale.kr(bufnum) * scale, doneAction:2) * amp);
+		PlayBuf.ar(
+			numChannels: 2,
+			bufnum: bufnum,
+			rate: BufRateScale.kr(bufnum) * scale,
+			startPos: startFrame,
+			doneAction:2) * amp);
 
 }).add;
 
 SynthDef(\playStereoInverseSound, {
-	arg out = 0, bufnum = 0, scale = 1.0, ampBus = 0;
-	var amp, tmp;
-	amp = In.kr(ampBus);
-	tmp = PlayBuf.ar(2, bufnum, BufRateScale.kr(bufnum) * scale, doneAction:2) * amp;
+	arg out = 0, bufnum = 0, scale = 1.0, amp = 1.0, startPos = 0;
+	var tmp, startFrame;
+
+	startFrame = BufFrames.kr(bufnum) * startPos;
+
+	tmp = PlayBuf.ar(
+		numChannels: 2,
+		bufnum: bufnum,
+		rate: BufRateScale.kr(bufnum) * scale,
+		startPos: startFrame,
+		doneAction:2) * amp;
 	Out.ar(out, tmp.reverse);
 }).add;
 )
