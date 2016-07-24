@@ -12,6 +12,8 @@ import net.soundmining.Melody._
 object MusiqueConcrete1 {
 
   def cut(start: Float)(implicit player: MusicPlayer) = {
+    val overallAmpFactor = 1.0f
+
     val overallRepeats = 29
 
     val amps = palindrome(atom(.1f), atom(.2f), atom(.1f), atom(3f), atom(.3f), atom(2.1f), atom(.8f))
@@ -34,7 +36,7 @@ object MusiqueConcrete1 {
       (0 until repets.takeItem()).flatMap(j =>
         instrumentBuilder.takeItem().apply()
           .bufNum(0)
-          .amp(amps.takeItem())
+          .amp(amps.takeItem() * overallAmpFactor)
           .scale(startScale.takeItem() + (j * scale.takeItem()))
           .buildInstruments()).toSeq
       )
@@ -47,6 +49,8 @@ object MusiqueConcrete1 {
   }
 
   def klang(start: Float)(implicit player: MusicPlayer) = {
+    val overallAmpFactor = 1.0f
+
     val overallRepeats = 22
 
     val amps = palindrome(atom(.8f), atom(1.3f), atom(.5f), atom(3f), atom(.2f), atom(.3f), atom(.2f))
@@ -69,7 +73,7 @@ object MusiqueConcrete1 {
       (0 until repets.takeItem()).flatMap(j =>
         instrumentBuilder.takeItem().apply()
           .bufNum(1)
-          .amp(amps.takeItem())
+          .amp(amps.takeItem() * overallAmpFactor)
           .scale(startScale.takeItem() + (j * scale.takeItem()))
           .buildInstruments()).toSeq
     )
@@ -83,6 +87,8 @@ object MusiqueConcrete1 {
 
 
   def lowCutNoise(start: Float)(implicit player: MusicPlayer) = {
+    val overallAmpFactor = 10.0f
+
     val overallRepeats = 10
 
     val amps = palindrome(atom(20f), atom(25f), atom(20f))
@@ -108,7 +114,7 @@ object MusiqueConcrete1 {
       (0 until repets.takeItem()).flatMap(j =>
         instrumentBuilder.takeItem().apply()
           .bufNum(0)
-          .amp(amps.takeItem())
+          .amp(amps.takeItem() * overallAmpFactor)
           .scale(startScale.takeItem() + (j * scale.takeItem()))
           .start(soundStart.takeItem() + soundStartVariance.takeItem())
           .buildInstruments()).toSeq
@@ -124,6 +130,8 @@ object MusiqueConcrete1 {
   }
 
   def lowKlangNoise(start: Float)(implicit player: MusicPlayer) = {
+    val overallAmpFactor = 10.0f
+
     val overallRepeats = 5
 
     val amps = palindrome(atom(20f), atom(25f), atom(20f))
@@ -149,7 +157,7 @@ object MusiqueConcrete1 {
       (0 until repets.takeItem()).flatMap(j =>
         instrumentBuilder.takeItem().apply()
           .bufNum(1)
-          .amp(amps.takeItem())
+          .amp(amps.takeItem() * overallAmpFactor)
           .scale(startScale.takeItem() + (j * scale.takeItem()))
           .start(soundStart.takeItem() + soundStartVariance.takeItem())
           .buildInstruments()).toSeq

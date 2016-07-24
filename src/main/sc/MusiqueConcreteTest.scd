@@ -3,8 +3,6 @@ b = Buffer.read(s, "/Users/danielstahl/Documents/Projects/musique-concrete-i_sou
 b.bufnum;
 )
 
-
-
 (
 SynthDef(\arBufControl, {
 	arg out = 0, bufnum = 0, scale = 1.0, startpos = 0,
